@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        th, td {
+          padding: 10px;
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        .divisible > td {
+          border: none
+        }
+        .bingo-table {
+            margin: 1px
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <h1 style="text-align: center">CEV 12 LOTO</h1>
+    </div>
+    <table class= "bingo">
+        <div>
+             <tr>
+                <td>
+                    <table class="bingo-table">
+                        <tr>
+                              <td colspan="9">BINGO {{ ve1.index }}</td>
+                        </tr>
+                         {{#each ve1.data}}
+                            {{#if divisible}}
+                                <tr class="divisible">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            {{/if}}
+                        <tr>
+                            <td>{{ Num1 }}</td>
+                            <td>{{ Num2 }}</td>
+                            <td>{{ Num3 }}</td>
+                            <td>{{ Num4 }}</td>
+                            <td>{{ Num5 }}</td>
+                            <td>{{ Num6 }}</td>
+                            <td>{{ Num7 }}</td>
+                            <td>{{ Num8 }}</td>
+                            <td>{{ Num9 }}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </td>
+                <td>
+                    <table class="bingo-table">
+                        <tr>
+                              <td colspan="9">BINGO {{ ve2.index }}</td>
+                        </tr>
+                         {{#each ve2.data}}
+                             {{#if divisible}}
+                                 <tr class="divisible">
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>
+                             {{/if}}
+                        <tr>
+                            <td>{{ Num1 }}</td>
+                            <td>{{ Num2 }}</td>
+                            <td>{{ Num3 }}</td>
+                            <td>{{ Num4 }}</td>
+                            <td>{{ Num5 }}</td>
+                            <td>{{ Num6 }}</td>
+                            <td>{{ Num7 }}</td>
+                            <td>{{ Num8 }}</td>
+                            <td>{{ Num9 }}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </td>
+             </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
