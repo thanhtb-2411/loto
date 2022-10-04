@@ -9,7 +9,8 @@ start()
 
 async function start() {
     const dateTime = new Date().toISOString().slice(0, 10)
-    fs.mkdir(dateTime, {recursive: true}, (err) => {
+    const bingoPath = "bingo/" + dateTime
+    fs.mkdir(bingoPath, {recursive: true}, (err) => {
         if (err) throw err;
     })
     const filePath = path.join(__dirname, `template.hbs`)
@@ -36,37 +37,13 @@ async function start() {
     for (let i = 0; i < dataListMap.length; i = i + 2) {
         const ve1 = {data: dataListMap[i], index: i}
         const ve2 = {data: dataListMap[i + 1], index: i + 1}
-        compileTemplate({ve1, ve2}, templateHtml).then(html => {
-                html_to_pdf.generatePdf({content: html}, options).then(pdfBuffer => {
-                    fs.writeFileSync(dateTime + "/bingo-" + i + ".pdf", pdfBuffer, 'binary');
-                })
-            }
-        )
+        const html = compileTemplate({ve1, ve2}, templateHtml)
+        html_to_pdf.generatePdf({content: html}, options).then(pdfBuffer => {
+            fs.writeFileSync(bingoPath + "/bingo-" + i + ".pdf", pdfBuffer, 'binary');
+        })
     }
 }
 
-async function compileTemplate(templateData, html) {
-    hbs.registerHelper('inc', (value) => parseInt(value, 10) + 1)
-    hbs.registerHelper('time_stamp', () => new Date())
-    hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
-        switch (operator) {
-            case '===':
-                return (v1 === v2) ? options.fn(this) : options.inverse(this)
-            case '!==':
-                return (v1 !== v2) ? options.fn(this) : options.inverse(this)
-            case '||':
-                return (v1 || v2) ? options.fn(this) : options.inverse(this)
-            default:
-                return options.inverse(this)
-        }
-    })
-    hbs.registerHelper('ifIsNthItem', function (options) {
-        const index = options.data.index + 1
-        const nth = options.hash.nth
-
-        if (index % nth === 0) return options.fn(this)
-        return options.inverse(this)
-    })
-
+function compileTemplate(templateData, html) {
     return hbs.compile(html)(templateData)
 }
